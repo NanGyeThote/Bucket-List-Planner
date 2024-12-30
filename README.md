@@ -42,12 +42,12 @@ A simple and interactive web application to manage your bucket list tasks. This 
 
 ## File Structure
 
-    ```bash
-    │
-    ├── index.html          # Main HTML file
-    ├── README.md           # Project documentation
+    bucket-list-planner/
+    |
+    |
+    |── index.html          # Main HTML file
+    |── README.md           # Project documentation
     └── style.css           # Custom CSS file (if needed)
-    ```
 
 ## Customization
 
@@ -57,6 +57,5 @@ You can easily customize the colors, fonts, and overall look of the application 
 
 This project is open source and available under the MIT License.
 
-    ```bash
-    Feel free to replace placeholders like `yourusername` with your actual GitHub username and adjust the structure if needed!
-    ```
+Feel free to replace placeholders like `yourusername` with your actual GitHub username and adjust the structure if needed!
+    
