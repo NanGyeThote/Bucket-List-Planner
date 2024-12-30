@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bucket List Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Enhanced Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .hover-pulse:hover {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        .strike-through {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .shadow-glow {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .rounded-xl {
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="gradient-bg py-6">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold tracking-wide">Bucket List Planner</h1>
+            <button class="bg-white text-blue-600 px-6 py-2 rounded hover:bg-gray-200 shadow-glow">Login</button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 mt-8">
+        <!-- Add Task Section -->
+        <section class="mb-8">
+            <div class="bg-white p-8 rounded-xl shadow-lg fade-in">
+                <h2 class="text-2xl font-semibold mb-6">Add a New Item</h2>
+                <form id="addTaskForm" class="flex flex-col gap-6">
+                    <input type="text" id="taskTitle" class="border rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter task title" required>
+                    <textarea id="taskDescription" class="border rounded-xl p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter task description"></textarea>
+                    <button type="submit" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:opacity-90 hover-pulse">Add to List</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Task List Section -->
+        <section>
+            <h2 class="text-2xl font-semibold mb-6">Your Bucket List</h2>
+            <ul id="taskList" class="space-y-6">
+                <!-- Task items will appear here -->
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        const addTaskForm = document.getElementById('addTaskForm');
+        const taskList = document.getElementById('taskList');
+
+        addTaskForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('taskTitle').value;
+            const description = document.getElementById('taskDescription').value;
+
+            // Create a new task item
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('bg-white', 'p-6', 'rounded-xl', 'shadow-lg', 'flex', 'justify-between', 'items-center', 'fade-in');
+
+            taskItem.innerHTML = `
+                <div>
+                    <h3 class="text-lg font-bold">${title}</h3>
+                    <p class="text-gray-600">${description}</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" class="w-6 h-6 complete-task">
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 delete-btn">Delete</button>
+                </div>
+            `;
+
+            // Add event listener for checkbox
+            taskItem.querySelector('.complete-task').addEventListener('change', function(event) {
+                const parent = event.target.closest('li');
+                const title = parent.querySelector('h3');
+                const description = parent.querySelector('p');
+
+                if (this.checked) {
+                    title.classList.add('strike-through');
+                    description.classList.add('strike-through');
+                } else {
+                    title.classList.remove('strike-through');
+                    description.classList.remove('strike-through');
+                }
+            });
+
+            // Add delete functionality
+            taskItem.querySelector('.delete-btn').addEventListener('click', function() {
+                taskItem.remove();
+            });
+
+            // Append to the task list
+            taskList.appendChild(taskItem);
+
+            // Clear the form
+            addTaskForm.reset();
+        });
+    </script>
+</body>
+</html>
